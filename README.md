@@ -17,12 +17,12 @@ This package is built with the following precepts in mind:
 ### Vision
 
 Core features
-1. Dynamically resizing pass-by-reference vectors and lists that can be used fully in-RAM or streamed from the hard drive.
-2. Hashtable for fast key-value lookup - complete with capabilities to scan for key collision.
+- Dynamically resizing pass-by-reference vectors and lists that can be used fully in-RAM or streamed from the hard drive.
+- Hashtable for fast key-value lookup - complete with capabilities to scan for key collision.
 
 Stretch features
-3. Dictionary for key-value lookup - strictly promising no key collision, at the cost of some performance.
-4. Spatial partitioning trees - perhaps working in arbitary dimientions, and maybe even with combined numeric and character vector input.
+- Dictionary for key-value lookup - strictly promising no key collision, at the cost of some performance.
+- Spatial partitioning trees - perhaps working in arbitary dimientions, and maybe even with combined numeric and character vector input.
 
 Future
-5. Brainstorm some fun new cool ideas to code...
+- Brainstorm some fun new cool ideas to code...
