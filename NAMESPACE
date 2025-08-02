@@ -1,1 +1,16 @@
+S3method("[[","Hashtable_r","[[.Hashtable_r")
+S3method("[[<-","Hashtable_r","[[<-.Hashtable_r")
+S3method("[","Hashtable_r","[.Hashtable_r")
+S3method("[<-","Hashtable_r","[<-.Hashtable_r")
+
+S3method("[[","VectorStream_r","[[.VectorStream_r")
+S3method("[[<-","VectorStream_r","[[<-.VectorStream_r")
+S3method("[","VectorStream_r","[.VectorStream_r")
+S3method("[<-","VectorStream_r","[<-.VectorStream_r")
+
+S3method("[[","DynamicVector_r","[[.DynamicVector_r")
+S3method("[[<-","DynamicVector_r","[[<-.DynamicVector_r")
+S3method("[","DynamicVector_r","[.DynamicVector_r")
+S3method("[<-","DynamicVector_r","[<-.DynamicVector_r")
+
 exportPattern("^[[:alpha:]]+")

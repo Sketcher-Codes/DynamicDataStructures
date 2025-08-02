@@ -47,6 +47,7 @@ Hashtable_r <- function(){
   return(FunctionList)
 }
 
+
 "[[.Hashtable_r" <- function(x, k){
   return(x$get_u(k))
 }
@@ -80,3 +81,6 @@ Hashtable_r <- function(){
   }
   return(x)
 }
+
+#.S3method
+
