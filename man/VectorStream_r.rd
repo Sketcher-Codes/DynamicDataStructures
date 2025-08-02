@@ -14,6 +14,11 @@ Please only use one VectorStream_r per operating directory. VectorStream_r will 
 }
 \examples{
 #Not run
-#if(dir.exists(paste0(getwd(),"/VectorStream_r_example"))) { unlink(paste0(getwd(),"/VectorStream_r_example"), recursive = F, force = F) }
-#MyVectorStream_r = VectorStream_r(ChunkSize = 1024, OperatingDirectory = paste0(getwd(),"/VectorStream_r_example"))
+#if(dir.exists(paste0(getwd(),"/VectorStream_r_example"))) {
+# unlink(paste0(getwd(),"/VectorStream_r_example"), recursive = F, force = F)
+#}
+#MyVectorStream_r = VectorStream_r(
+#                        ChunkSize = 1024
+#                        , OperatingDirectory = paste0(getwd(),"/VectorStream_r_example")
+#                   )
 }
