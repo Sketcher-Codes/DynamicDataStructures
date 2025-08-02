@@ -1,6 +1,6 @@
 # Dynamic Data Structures (For R)
 
-###Raison d'etre
+### Raison d'etre
 
 This package exists support working with big data, especially big dynamic data in R.
 By 'Big' data I mean everything upwards of 50,000 rows where R's pass by value nature can severly hurt performance.
@@ -14,7 +14,7 @@ This package is built with the following precepts in mind:
 5. You want to vett the package before you use it, and have the option to maintain the code yourself.
 6. You want to use this package only where it excells at performance, and easily transition to fast elements base R where they are optimal.
 
-###Vision
+### Vision
 
 Core features
 1. Dynamically resizing pass-by-reference vectors and lists that can be used fully in-RAM or streamed from the hard drive.
