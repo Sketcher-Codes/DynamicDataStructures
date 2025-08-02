@@ -4,11 +4,7 @@
 #Fast vector pass data by reference
 DynamicVector_r <- function(ChunkSize = 1024){
   #In values environment
-  #v = value register
-  #s = segment index register
-  #i = subchunk index register
-  #d = data (a list of vectors)
-  #l = chunk size for allocations
+
 
 
   FunctionResult = list()
@@ -19,19 +15,13 @@ DynamicVector_r <- function(ChunkSize = 1024){
   Chunk_Count = 1
   Capacity = Chunk_Size
 
-  assign(envir = ValuesEnvironment, x = "d", value = list())
-  assign(envir = ValuesEnvironment, x = "s", value = 1)
-  assign(envir = ValuesEnvironment, x = "i", value = 1)
-  assign(envir = ValuesEnvironment, x = "v", value = NA)
-  assign(envir = ValuesEnvironment, x = "l", value = Chunk_Size)
-  eval(parse(text = "d[[1]] = rep(NA,l)"), envir = ValuesEnvironment)
+
+  ValuesEnvironment$d = list()
+  ValuesEnvironment$d[[1]] = rep(NA,Chunk_Size)
 
   FunctionResult$get <- function(i){
     imo = i - 1
-    assign(envir = ValuesEnvironment, x = "s", value = (floor(imo / Chunk_Size) + 1), inherits = F)#Segment starting at 1
-    assign(envir = ValuesEnvironment, x = "i", value = ((imo %% Chunk_Size) + 1), inherits = F)#Subchunk starting at 1
-    eval(parse(text = "v = d[[s]][i]"), envir = ValuesEnvironment)#Value to extract out
-    return(get(x = "v", envir = ValuesEnvironment, inherits = F))#Extract value
+    return(ValuesEnvironment$d[[(floor(imo / Chunk_Size) + 1)]][((imo %% Chunk_Size) + 1)])
   }
 
   FunctionResult$set <- function(i, val){
@@ -40,26 +30,20 @@ DynamicVector_r <- function(ChunkSize = 1024){
     }
     while(i > Capacity){
       s = Chunk_Count + 1
-      assign(envir = ValuesEnvironment, x = "s", value = s, inherits = FALSE)
-      eval(parse(text = "d[[s]] = rep(NA,l)"), envir = ValuesEnvironment)
+      ValuesEnvironment$d[[s]] = rep(NA,Chunk_Size)
       Chunk_Count <<- s
       Capacity <<- Capacity + Chunk_Size
     }
     #Parse index and value into environment
     imo = i - 1
-    assign(envir = ValuesEnvironment, x = "s", value = (floor(imo / Chunk_Size) + 1), inherits = FALSE)#Segment starting at 1
-    assign(x = "i", value = (imo %% Chunk_Size + 1), envir = ValuesEnvironment)#Subchunk starting at 1
-    assign(x = "v", value = val, envir = ValuesEnvironment)#Value to parse in
-    eval(parse(text = "d[[s]][i] = v"), envir = ValuesEnvironment)
+    ValuesEnvironment$d[[(floor(imo / Chunk_Size) + 1)]][(imo %% Chunk_Size + 1)] = val
+
   }
 
   FunctionResult$clear <- function(){
     eval("rm(list = ls())", envir = ValuesEnvironment)
-    assign(envir = ValuesEnvironment, x = "d", value = rep(NA, Chunk_Size))
-    assign(envir = ValuesEnvironment, x = "s", value = 1)
-    assign(envir = ValuesEnvironment, x = "i", value = 1)
-    assign(envir = ValuesEnvironment, x = "v", value = NA)
-    assign(envir = ValuesEnvironment, x = "l", value = Chunk_Size)
+    ValuesEnvironment$d = list()
+    ValuesEnvironment$d[[1]] = rep(NA,Chunk_Size)
     Vector_Length <<- 0
     Chunk_Count <<- 1
     Capacity <<- Chunk_Size
