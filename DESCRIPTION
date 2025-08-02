@@ -1,0 +1,18 @@
+Package: DynamicDataStructures
+Type: Package
+Title: Dynamic data structures
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Peter", "McGuiness",
+      email = "pnmcguiness@gmail.com",
+      role = c("aut", "cre")
+    )
+  )
+Description: Dynamic data structures to speed up development and reduce headaches.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
