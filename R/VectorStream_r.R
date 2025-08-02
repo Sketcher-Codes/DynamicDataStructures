@@ -162,3 +162,38 @@ VectorStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
 }
 
 
+"[[.VectorStream_r" <- function(x, k){
+  return(x$get(k))
+}
+
+"[[<-.VectorStream_r" <- function(x, k, value){
+  x$set(k, value)
+  return(x)
+}
+
+
+"[.VectorStream_r" <- function(x, ...){
+  Keys = unlist(list(...))
+  i = 1
+  l = length(Keys)
+  Result = rep(NA,l)
+  while(i <= l){
+    Result[i] = x$get(Keys[i])
+    i = i + 1
+  }
+  return(Result)
+}
+
+"[<-.VectorStream_r" <- function(x, ..., value){
+  i = 1
+  Keys = unlist(list(...))
+  l = length(Keys)
+  while(i <= l){
+    x$set(Keys[i], value[[i]])
+    i = i + 1
+  }
+  return(x)
+}
+
+
+
