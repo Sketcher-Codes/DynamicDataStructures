@@ -157,7 +157,7 @@ VectorStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
   }
 
 
-
+  class(FunctionsList) = "VectorStream_r"
   return(FunctionsList)
 }
 

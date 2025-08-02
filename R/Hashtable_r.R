@@ -43,5 +43,40 @@ Hashtable_r <- function(){
   FunctionList$Clear <- function(){
     rm(list = ls(envir = ValuesEnvironment), envir = ValuesEnvironment)
   }
+  class(FunctionList) = "Hashtable_r"
   return(FunctionList)
+}
+
+"[[.Hashtable_r" <- function(x, k){
+  return(x$get_u(k))
+}
+
+"[[<-.Hashtable_r" <- function(x, k, value){
+  x$set_u(k, value)
+  return(x)
+}
+
+
+"[.Hashtable_r" <- function(x, ...){
+  Result = list()
+  Keys = unlist(list(...))
+  i = 1
+  l = length(Keys)
+  while(i <= l){
+    Result[[i]] = x$get_u(Keys[i])
+    i = i + 1
+  }
+  names(Result) = Keys
+  return(Result)
+}
+
+"[<-.Hashtable_r" <- function(x, ..., value){
+  i = 1
+  Keys = unlist(list(...))
+  l = length(Keys)
+  while(i <= l){
+    x$set_u(Keys[i], value[[i]])
+    i = i + 1
+  }
+  return(x)
 }

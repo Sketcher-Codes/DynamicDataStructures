@@ -73,6 +73,6 @@ DynamicVector_r <- function(ChunkSize = 1024){
   }
 
 
-
+  class(FunctionResult) = "DynamicVector_r"
   return(FunctionResult)
 }
