@@ -9,9 +9,18 @@ if(class(try(expect_error(VectorStream_r(100, getwd()), "VectorStream_r will shr
 stop("FATAL - Vector stream respect an existing directory. Halting to avoid risk of file system damage.")
 }
 
-MyVectorStream = VectorStream_r(100, DestructableDir)
+MyVectorStream = VectorStream_r(77, DestructableDir) #need a non-size aligned number so that we get some empty space in the top output
 
 expect_equal(dir.exists(DestructableDir), TRUE)
+
+for(i in 1:320){
+  MyVectorStream$set(i,i)
+}
+
+for(i in sample(1:320,320,F)){
+  expect_equal(MyVectorStream$get(i), i)
+}
+
 
 expect_no_error(MyVectorStream$DestroyOperatingDirectoryAndAllFilesTherein())
 
