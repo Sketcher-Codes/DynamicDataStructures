@@ -77,6 +77,17 @@ test_that("Basic numeric tests", {
   expect_lt(DeltaTimeDVR, DeltaTimeBaseR)
 
 
+  ModeDV = DynamicVector_r(10)
 
+  for(i in 1:100){
+    ModeDV[[i]] = i
+  }
+  for(i in 1:100){
+    expect_equal(i, ModeDV[[i]])
+  }
+
+  ModeDV[1:100] = 101:200
+
+  expect_equal(sum(ModeDV[1:100]), sum(101:200))
 
 })

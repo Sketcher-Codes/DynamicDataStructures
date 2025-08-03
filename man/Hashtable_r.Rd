@@ -1,5 +1,9 @@
 \name{Hashtable_r}
 \alias{Hashtable_r}
+\alias{as.data.frame.Hashtable_r}
+\alias{as.list.Hashtable_r}
+\alias{length.Hashtable_r}
+\alias{print.Hashtable_r}
 \title{
 Hashtable_r
 }
