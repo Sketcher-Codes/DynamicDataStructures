@@ -24,4 +24,36 @@ for(i in SampleSet){
   expect_identical(SomeHashtable$get_u(i), i)
 }
 
+SomeHashtable$Clear()
+
+for(i in SampleSet){
+  SomeHashtable[[i]] = i
+}
+
+for(i in SampleSet){
+  expect_identical(SomeHashtable[[i]], i)
+}
+
+SomeHashtable$Clear()
+
+SomeHashtable[SampleSet] = SampleSet
+expect_equal(length(SomeHashtable), length(SampleSet))
+expect_equal(unname(unlist(SomeHashtable[SampleSet])), SampleSet)
+
+SomeHashtable$Clear()
+
+SomeHashtable[["Foo"]] = c(1,2,3,4,5)
+SomeHashtable[["Bar"]] = letters[c(1,2,3,4,5)]
+
+SomeList = list()
+SomeList[["Bar"]] = letters[c(1,2,3,4,5)]
+SomeList[["Foo"]] = c(1,2,3,4,5)
+
+expect_identical(as.list(SomeHashtable), SomeList)
+
+SomeDataFrame = data.frame(Bar = letters[c(1,2,3,4,5)], Foo = c(1,2,3,4,5))
+
+expect_identical(as.data.frame(SomeHashtable), SomeDataFrame)
+
+
 

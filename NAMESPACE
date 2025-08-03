@@ -1,16 +1,27 @@
+importFrom("utils", "capture.output", "str")
+
 S3method("[[","Hashtable_r","[[.Hashtable_r")
 S3method("[[<-","Hashtable_r","[[<-.Hashtable_r")
 S3method("[","Hashtable_r","[.Hashtable_r")
 S3method("[<-","Hashtable_r","[<-.Hashtable_r")
+
+S3method("length","Hashtable_r","length.Hashtable_r")
+S3method("as.list","Hashtable_r","as.list.Hashtable_r")
+S3method("as.data.frame","Hashtable_r","as.data.frame.Hashtable_r")
+S3method("print","Hashtable_r","print.Hashtable_r")
+
 
 S3method("[[","VectorStream_r","[[.VectorStream_r")
 S3method("[[<-","VectorStream_r","[[<-.VectorStream_r")
 S3method("[","VectorStream_r","[.VectorStream_r")
 S3method("[<-","VectorStream_r","[<-.VectorStream_r")
 
+
 S3method("[[","DynamicVector_r","[[.DynamicVector_r")
 S3method("[[<-","DynamicVector_r","[[<-.DynamicVector_r")
 S3method("[","DynamicVector_r","[.DynamicVector_r")
 S3method("[<-","DynamicVector_r","[<-.DynamicVector_r")
+
+export("%for%")
 
 exportPattern("^[[:alpha:]]+")

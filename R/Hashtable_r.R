@@ -34,10 +34,38 @@ Hashtable_r <- function(){
     return(exists(x = as.character(key), envir = ValuesEnvironment))
   }
 
-
+  FunctionList$Count <- function(){
+    return(length(ls(envir = ValuesEnvironment)))
+  }
 
   FunctionList$Keys <- function(){
     return(unlist(ls(envir = ValuesEnvironment)))
+  }
+
+  FunctionList$ToList <- function(){
+    KeyNames = unlist(ls(envir = ValuesEnvironment))
+    Result = list()
+    i = 1
+    l = length(KeyNames)
+    while(i <= l){
+      Result[[i]] = get(x = KeyNames[i], envir = ValuesEnvironment)
+      i = i + 1
+    }
+    names(Result) = KeyNames
+    return(Result)
+  }
+
+  FunctionList$ToDataFrame <- function(){
+    KeyNames = unlist(ls(envir = ValuesEnvironment))
+    Result = list()
+    i = 1
+    l = length(KeyNames)
+    while(i <= l){
+      Result[[i]] = get(x = KeyNames[i], envir = ValuesEnvironment)
+      i = i + 1
+    }
+    names(Result) = KeyNames
+    return(data.frame(Result, check.rows = FALSE, check.names = FALSE, fix.empty.names = FALSE, stringsAsFactors = FALSE))
   }
 
   FunctionList$Clear <- function(){
@@ -82,5 +110,35 @@ Hashtable_r <- function(){
   return(x)
 }
 
-#.S3method
+"length.Hashtable_r" <- function(x){
+  return(x$Count())
+}
 
+"as.list.Hashtable_r" <- function(x, ...){
+  return(x$ToList())
+}
+
+"as.data.frame.Hashtable_r" <- function(x, ...){
+  return(x$ToDataFrame())
+}
+
+"print.Hashtable_r" <- function(x, MaxItems = 6, ...){
+  if(MaxItems < 0){
+    MaxItems = 0
+  }
+  TheCount = x$Count()
+  NumLines = min(TheCount, MaxItems)
+  if(NumLines <= 0){
+    cat("An empty Hashtable_r\n")
+    return(invisible())
+  }
+  cat("A Hashtable_r containing", TheCount, "key - value pairs\n")
+  TheNames = x$Keys()
+  i = 1
+  while(i <= NumLines){
+    cat("Item[[", TheNames[i],"]] is ")
+    print(x$get_u(TheNames[i]))
+    i = i + 1
+  }
+  return(invisible())
+}
