@@ -51,9 +51,7 @@ VectorStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
       TopChunkSegment <<- FileChunkNumber
 
       if(FileChunkNumber > Segment_Count){
-        print(FileChunkNumber)
-        print(Segment_Count)
-        stop(paste0("index ", i, " outside bounds of the data structure"))
+        return(NA)
       }
       else{
         TopValuesEnvironment <<- LoadSegment(FileChunkNumber)
@@ -98,9 +96,7 @@ VectorStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
     }
     imo = i - 1
     FileChunkNumber = floor(imo / ChunkSize) + 1
-    if(FileChunkNumber > Segment_Count){
-      Segment_Count <<- FileChunkNumber
-    }
+
     if(FileChunkNumber > TopChunkSegment){
       UnloadSegment(BottomValuesEnvironment, BottomChunkSegment)
       BottomValuesEnvironment <<- TopValuesEnvironment
@@ -123,6 +119,11 @@ VectorStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
       BottomChunkSegment <<- FileChunkNumber
     }
 
+    if(FileChunkNumber > Segment_Count){
+      Segment_Count <<- FileChunkNumber
+    }
+
+
     if(FileChunkNumber == TopChunkSegment){
       TopValuesEnvironment$d[(imo %% Chunk_Size + 1)] = val
       return()
@@ -137,11 +138,13 @@ VectorStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
       UnloadSegment(BottomValuesEnvironment, BottomChunkSegment)
       BottomValuesEnvironment <<- LoadSegment(FileChunkNumber)
       BottomValuesEnvironment$d[(imo %% Chunk_Size + 1)] = val
+      BottomChunkSegment <<- FileChunkNumber
       return()
     } else {
       UnloadSegment(TopValuesEnvironment, TopChunkSegment)
       TopValuesEnvironment <<- LoadSegment(FileChunkNumber)
       TopValuesEnvironment$d[(imo %% Chunk_Size + 1)] = val
+      TopChunkSegment <<- FileChunkNumber
       return()
     }
   }

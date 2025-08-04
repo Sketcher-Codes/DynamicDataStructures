@@ -51,9 +51,7 @@ ListStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
       TopChunkSegment <<- FileChunkNumber
 
       if(FileChunkNumber > Segment_Count){
-        print(FileChunkNumber)
-        print(Segment_Count)
-        stop(paste0("index ", i, " outside bounds of the data structure"))
+        return(NA)
       }
       else{
         TopValuesEnvironment <<- LoadSegment(FileChunkNumber)
@@ -98,9 +96,9 @@ ListStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
     }
     imo = i - 1
     FileChunkNumber = floor(imo / ChunkSize) + 1
-    if(FileChunkNumber > Segment_Count){
-      Segment_Count <<- FileChunkNumber
-    }
+
+
+
     if(FileChunkNumber > TopChunkSegment){
       UnloadSegment(BottomValuesEnvironment, BottomChunkSegment)
       BottomValuesEnvironment <<- TopValuesEnvironment
@@ -109,7 +107,7 @@ ListStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
 
       if(FileChunkNumber > Segment_Count){
         TopValuesEnvironment <<- new.env()
-        TopValuesEnvironment$d = rep(NA,Chunk_Size)
+        TopValuesEnvironment$d = as.list(rep(NA,Chunk_Size))
       }
       else{
         TopValuesEnvironment <<- LoadSegment(FileChunkNumber)
@@ -122,6 +120,11 @@ ListStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
       TopChunkSegment <<- BottomChunkSegment
       BottomChunkSegment <<- FileChunkNumber
     }
+
+    if(FileChunkNumber > Segment_Count){
+      Segment_Count <<- FileChunkNumber
+    }
+
 
     if(FileChunkNumber == TopChunkSegment){
       TopValuesEnvironment$d[[(imo %% Chunk_Size + 1)]] = val
@@ -137,11 +140,13 @@ ListStream_r <- function(ChunkSize = 1024, OperatingDirectory = NULL){
       UnloadSegment(BottomValuesEnvironment, BottomChunkSegment)
       BottomValuesEnvironment <<- LoadSegment(FileChunkNumber)
       BottomValuesEnvironment$d[[(imo %% Chunk_Size + 1)]] = val
+      BottomChunkSegment <<- FileChunkNumber
       return()
     } else {
       UnloadSegment(TopValuesEnvironment, TopChunkSegment)
       TopValuesEnvironment <<- LoadSegment(FileChunkNumber)
       TopValuesEnvironment$d[[(imo %% Chunk_Size + 1)]] = val
+      TopChunkSegment <<- FileChunkNumber
       return()
     }
   }

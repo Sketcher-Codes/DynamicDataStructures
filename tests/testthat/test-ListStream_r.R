@@ -27,7 +27,7 @@ expect_no_error(MyListStream$DestroyOperatingDirectoryAndAllFilesTherein())
 
 MyListStream = ListStream_r(100, DestructableDir)
 
-for(i in 1:320){
+for(i in sample(1:320,320,FALSE)){
   MyListStream[[i]] = i
 }
 
@@ -49,13 +49,16 @@ expect_equal(!dir.exists(DestructableDir), TRUE)
 
 MyListStream = ListStream_r(100, DestructableDir)
 
-for(i in 1:320){
-  MyListStream[[i]] = rep(1, i)
+for(i in sample(1:320,320,FALSE)){
+  MyListStream[[i]] = as.list(rep(1, i))
 }
 
 for(i in sample(1:320,320,FALSE)){
-  expect_equal(MyListStream[[i]], rep(1, i))
+  expect_equal(MyListStream[[i]], as.list(rep(1, i)))
 }
+
+expect_no_error(MyListStream[[1000]])
+expect_equal(is.na(MyListStream[[2000]]), TRUE)
 
 expect_no_error(MyListStream$DestroyOperatingDirectoryAndAllFilesTherein())
 
