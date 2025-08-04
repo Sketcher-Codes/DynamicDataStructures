@@ -13,15 +13,17 @@ MyVectorStream = VectorStream_r(77, DestructableDir) #need a non-size aligned nu
 
 expect_equal(dir.exists(DestructableDir), TRUE)
 
-for(i in 1:320){
+#for(i in 1:320){
+for(i in sample(1:320,320,FALSE)){
   MyVectorStream$set(i,i)
 }
 
 for(i in sample(1:320,320,FALSE)){
   expect_equal(MyVectorStream$get(i), i)
 }
-
-
+MyVectorStream$set(600,600)
+expect_equal(is.na(MyVectorStream$get(440)), TRUE)
+expect_equal(MyVectorStream$get(600), 600)
 expect_no_error(MyVectorStream$DestroyOperatingDirectoryAndAllFilesTherein())
 
 MyVectorStream = VectorStream_r(100, DestructableDir)

@@ -13,7 +13,8 @@ MyListStream = ListStream_r(77, DestructableDir) #need a non-size aligned number
 
 expect_equal(dir.exists(DestructableDir), TRUE)
 
-for(i in 1:320){
+#for(i in 1:320){
+for(i in sample(1:320,320,FALSE)){
   MyListStream$set(i,i)
 }
 
